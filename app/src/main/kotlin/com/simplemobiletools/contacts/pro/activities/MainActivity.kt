@@ -46,8 +46,8 @@ import java.io.OutputStream
 import java.util.*
 
 class MainActivity : SimpleActivity(), RefreshContactsListener {
-    private val PICK_IMPORT_SOURCE_INTENT = 1
-    private val PICK_EXPORT_FILE_INTENT = 2
+//    private val PICK_IMPORT_SOURCE_INTENT = 1
+//    private val PICK_EXPORT_FILE_INTENT = 2
 
     private var isSearchOpen = false
     private var searchMenuItem: MenuItem? = null
@@ -73,7 +73,7 @@ class MainActivity : SimpleActivity(), RefreshContactsListener {
         storeStateVariables()
         setupTabColors()
         checkContactPermissions()
-        checkWhatsNewDialog()
+//        checkWhatsNewDialog()
         checkDialerMigrationDialog()
     }
 
@@ -185,49 +185,49 @@ class MainActivity : SimpleActivity(), RefreshContactsListener {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu, menu)
-        val currentFragment = getCurrentFragment()
-
-        menu.apply {
-            findItem(R.id.sort).isVisible = currentFragment != groups_fragment
-            findItem(R.id.filter).isVisible = currentFragment != groups_fragment
-            findItem(R.id.dialpad).isVisible = !config.showDialpadButton
-
-            setupSearch(this)
-            updateMenuItemColors(this)
-        }
-
-        return true
-    }
+//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//        menuInflater.inflate(R.menu.menu, menu)
+//        val currentFragment = getCurrentFragment()
+//
+//        menu.apply {
+//            findItem(R.id.sort).isVisible = currentFragment != groups_fragment
+//            findItem(R.id.filter).isVisible = currentFragment != groups_fragment
+//            findItem(R.id.dialpad).isVisible = !config.showDialpadButton
+//
+//            setupSearch(this)
+//            updateMenuItemColors(this)
+//        }
+//
+//        return true
+//    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.sort -> showSortingDialog()
             R.id.filter -> showFilterDialog()
             R.id.dialpad -> launchDialpad()
-            R.id.import_contacts -> tryImportContacts()
-            R.id.export_contacts -> tryExportContacts()
+//            R.id.import_contacts -> tryImportContacts()
+//            R.id.export_contacts -> tryExportContacts()
             R.id.settings -> startActivity(Intent(applicationContext, SettingsActivity::class.java))
-            R.id.about -> launchAbout()
+//            R.id.about -> launchAbout()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
-        super.onActivityResult(requestCode, resultCode, resultData)
-        if (requestCode == PICK_IMPORT_SOURCE_INTENT && resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
-            tryImportContactsFromFile(resultData.data!!)
-        } else if (requestCode == PICK_EXPORT_FILE_INTENT && resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
-            try {
-                val outputStream = contentResolver.openOutputStream(resultData.data!!)
-                exportContactsTo(ignoredExportContactSources, outputStream)
-            } catch (e: Exception) {
-                showErrorToast(e)
-            }
-        }
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, resultData)
+//        if (requestCode == PICK_IMPORT_SOURCE_INTENT && resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
+//            tryImportContactsFromFile(resultData.data!!)
+//        } else if (requestCode == PICK_EXPORT_FILE_INTENT && resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
+//            try {
+//                val outputStream = contentResolver.openOutputStream(resultData.data!!)
+//                exportContactsTo(ignoredExportContactSources, outputStream)
+//            } catch (e: Exception) {
+//                showErrorToast(e)
+//            }
+//        }
+//    }
 
     private fun storeStateVariables() {
         config.apply {
@@ -444,21 +444,21 @@ class MainActivity : SimpleActivity(), RefreshContactsListener {
         }
     }
 
-    private fun tryImportContacts() {
-        if (isQPlus()) {
-            Intent(Intent.ACTION_GET_CONTENT).apply {
-                addCategory(Intent.CATEGORY_OPENABLE)
-                type = "text/x-vcard"
-                startActivityForResult(this, PICK_IMPORT_SOURCE_INTENT)
-            }
-        } else {
-            handlePermission(PERMISSION_READ_STORAGE) {
-                if (it) {
-                    importContacts()
-                }
-            }
-        }
-    }
+//    private fun tryImportContacts() {
+//        if (isQPlus()) {
+//            Intent(Intent.ACTION_GET_CONTENT).apply {
+//                addCategory(Intent.CATEGORY_OPENABLE)
+//                type = "text/x-vcard"
+//                startActivityForResult(this, PICK_IMPORT_SOURCE_INTENT)
+//            }
+//        } else {
+//            handlePermission(PERMISSION_READ_STORAGE) {
+//                if (it) {
+//                    importContacts()
+//                }
+//            }
+//        }
+//    }
 
     private fun importContacts() {
         FilePickerDialog(this) {
@@ -499,31 +499,31 @@ class MainActivity : SimpleActivity(), RefreshContactsListener {
         }
     }
 
-    private fun tryExportContacts() {
-        if (isQPlus()) {
-            ExportContactsDialog(this, config.lastExportPath, true) { file, ignoredContactSources ->
-                ignoredExportContactSources = ignoredContactSources
-
-                Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                    type = "text/x-vcard"
-                    putExtra(Intent.EXTRA_TITLE, file.name)
-                    addCategory(Intent.CATEGORY_OPENABLE)
-
-                    startActivityForResult(this, PICK_EXPORT_FILE_INTENT)
-                }
-            }
-        } else {
-            handlePermission(PERMISSION_WRITE_STORAGE) {
-                if (it) {
-                    ExportContactsDialog(this, config.lastExportPath, false) { file, ignoredContactSources ->
-                        getFileOutputStream(file.toFileDirItem(this), true) {
-                            exportContactsTo(ignoredContactSources, it)
-                        }
-                    }
-                }
-            }
-        }
-    }
+//    private fun tryExportContacts() {
+//        if (isQPlus()) {
+//            ExportContactsDialog(this, config.lastExportPath, true) { file, ignoredContactSources ->
+//                ignoredExportContactSources = ignoredContactSources
+//
+//                Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+//                    type = "text/x-vcard"
+//                    putExtra(Intent.EXTRA_TITLE, file.name)
+//                    addCategory(Intent.CATEGORY_OPENABLE)
+//
+//                    startActivityForResult(this, PICK_EXPORT_FILE_INTENT)
+//                }
+//            }
+//        } else {
+//            handlePermission(PERMISSION_WRITE_STORAGE) {
+//                if (it) {
+//                    ExportContactsDialog(this, config.lastExportPath, false) { file, ignoredContactSources ->
+//                        getFileOutputStream(file.toFileDirItem(this), true) {
+//                            exportContactsTo(ignoredContactSources, it)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     private fun exportContactsTo(ignoredContactSources: HashSet<String>, outputStream: OutputStream?) {
         ContactsHelper(this).getContacts(true, ignoredContactSources) { contacts ->
