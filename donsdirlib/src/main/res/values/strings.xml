@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">Simple Contacts</string>
-    <string name="app_launcher_name">Contacts</string>
+    <string name="app_name">Don\'s Directory</string>
+    <string name="app_launcher_name">Don\'s Directory</string>
     <string name="address">Address</string>
     <string name="inserting">Inserting…</string>
     <string name="updating">Updating…</string>
+    <string name="phone_storage">Phone storage</string>
     <string name="phone_storage_hidden">Phone storage (not visible by other apps)</string>
     <string name="company">Company</string>
     <string name="job_position">Job position</string>
@@ -13,21 +14,24 @@
     <string name="send_sms_to_group">Send SMS to group</string>
     <string name="send_email_to_group">Send email to group</string>
     <string name="call_person">Call %s</string>
+    <string name="request_the_required_permissions">Request the required permissions</string>
     <string name="create_new_contact">Create new contact</string>
     <string name="add_to_existing_contact">Add to an existing contact</string>
-    <string name="dialer_moved">
-        <![CDATA[
-            The part of the app responsible for Call handling had to be moved into a separate new app Simple Dialer, please download it on <a href="https://play.google.com/store/apps/details?id=com.simplemobiletools.dialer">this link.</a> Thanks!
-        ]]>
-    </string>
+    <string name="must_make_default_dialer">You have to make this app the default dialer app to make use of blocked numbers.</string>
+    <string name="set_as_default">Set as default</string>
 
     <!-- Placeholders -->
+    <string name="no_contacts_found">No contacts found</string>
     <string name="no_contacts_with_emails">No contacts with emails have been found</string>
     <string name="no_contacts_with_phone_numbers">No contacts with phone numbers have been found</string>
 
     <string name="new_contact">New contact</string>
     <string name="edit_contact">Edit contact</string>
     <string name="select_contact">Select contact</string>
+    <string name="select_contacts">Select contacts</string>
+    <string name="first_name">First name</string>
+    <string name="middle_name">Middle name</string>
+    <string name="last_name">Last name</string>
     <string name="nickname">Nickname</string>
 
     <!-- Groups -->
@@ -47,6 +51,7 @@
     <string name="remove_photo">Remove photo</string>
 
     <!-- Settings -->
+    <string name="start_name_with_surname">Start name with surname</string>
     <string name="show_phone_numbers">Show phone numbers on the main screen</string>
     <string name="show_contact_thumbnails">Show contact thumbnails</string>
     <string name="show_dialpad_button">Show a dialpad button on the main screen</string>
@@ -54,18 +59,22 @@
     <string name="call_contact">Call contact</string>
     <string name="view_contact">View contact details</string>
     <string name="manage_shown_contact_fields">Manage shown contact fields</string>
+    <string name="filter_duplicates">Try filtering out duplicate contacts</string>
     <string name="manage_shown_tabs">Manage shown tabs</string>
     <string name="contacts">Contacts</string>
+    <string name="favorites">Favorites</string>
     <string name="show_call_confirmation_dialog">Show a call confirmation dialog before initiating a call</string>
     <string name="show_only_contacts_with_numbers">Show only contacts with phone numbers</string>
-    <string name="show_private_contacts">Show private contacts to Simple Dialer and Simple SMS Messenger</string>
+    <string name="show_dialpad_letters">Show letters on the dialpad</string>
 
     <!-- Emails -->
+    <string name="email">Email</string>
     <string name="home">Home</string>
     <string name="work">Work</string>
     <string name="other">Other</string>
 
     <!-- Phone numbers -->
+    <string name="number">Number</string>
     <string name="mobile">Mobile</string>
     <string name="main_number">Main</string>
     <string name="work_fax">Work Fax</string>
@@ -79,6 +88,9 @@
 
     <!-- Favorites -->
     <string name="no_favorites">Seems like you haven\'t added any favorite contacts yet.</string>
+    <string name="add_favorites">Add favorites</string>
+    <string name="add_to_favorites">Add to favorites</string>
+    <string name="remove_from_favorites">Remove from favorites</string>
     <string name="must_be_at_edit">You must be at the Edit screen to modify a contact</string>
 
     <!-- Search -->
@@ -99,78 +111,101 @@
     <string name="dialpad">Dialpad</string>
     <string name="add_number_to_contact">Add number to contact</string>
 
+    <!-- Dialer -->
+    <string name="dialer">Dialer</string>
+    <string name="calling">Calling</string>
+    <string name="incoming_call">Incoming call</string>
+    <string name="incoming_call_from">Incoming call from…</string>
+    <string name="ongoing_call">Ongoing call</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="decline_call">Decline</string>
+    <string name="answer_call">Answer</string>
+
     <!-- Visible fields -->
+    <string name="select_fields_to_show">Select fields to show</string>
     <string name="prefix">Prefix</string>
     <string name="suffix">Suffix</string>
     <string name="phone_numbers">Phone numbers</string>
     <string name="emails">Emails</string>
     <string name="addresses">Addresses</string>
     <string name="events">Events (birthdays, anniversaries)</string>
+    <string name="notes">Notes</string>
     <string name="organization">Organization</string>
     <string name="websites">Websites</string>
     <string name="groups">Groups</string>
     <string name="contact_source">Contact source</string>
     <string name="instant_messaging">Instant messaging (IM)</string>
 
+    <!-- Blocked numbers -->
+    <string name="manage_blocked_numbers">Manage blocked numbers</string>
+    <string name="not_blocking_anyone">You are not blocking anyone.</string>
+    <string name="add_a_blocked_number">Add a blocked number</string>
+    <string name="block_number">Block number</string>
+    <string name="block_numbers">Block numbers</string>
+    <string name="blocked_numbers">Blocked numbers</string>
+
     <!-- Confirmation dialog -->
+    <string name="delete_contacts_confirmation">Are you sure you want to delete %s?</string>    <!-- Are you sure you want to delete 5 contacts? -->
     <string name="delete_from_all_sources">The contact will be removed from all contact sources.</string>
+
+    <!-- Are you sure you want to delete 5 contacts? -->
+    <plurals name="delete_contacts">
+        <item quantity="one">%d contact</item>
+        <item quantity="other">%d contacts</item>
+    </plurals>
 
     <plurals name="delete_groups">
         <item quantity="one">%d group</item>
         <item quantity="other">%d groups</item>
     </plurals>
 
-    <!-- FAQ -->
-    <string name="faq_1_title">I want to change what fields are visible at contacts. Can I do it?</string>
-    <string name="faq_1_text">Yes, all you have to do is go in Settings -> Manage shown contact fields. There you can select what fields should be visible. Some of them are even disabled by default, so you might find some new ones there.</string>
-
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
-    <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Contacts Pro - Manage your contacts easily</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">A premium app for contact management with no ads, supports groups and favorites</string>
+    <string name="app_short_description">Don\'s Directory mobile app</string>
     <string name="app_long_description">
-        A lightweight app for managing your contacts loved by millions of people. The contacts can be stored on your device only, but also synchronized via Google, or other accounts.
-
-        You can use it for managing user emails and events too. It has the ability to sort/filter by multiple parameters, optionally display surname as the first name.
-
-        You can display your favorite contacts or groups on a separate list. Groups can be used for sending out batch emails or SMS, to save you some time, you can rename them easily.
-
-        It contains handy buttons for calling, or texting your contacts. All visible fields can be customized as you wish, you can easily hide the unused ones. The search function will search the given string at every visible contact field, to make you find your desired contact easily.
-
-        There is a lightweight dialpad at your service too, with smart contact suggestions.
-
-        It supports exporting/importing contacts in vCard format to .vcf files, for easy migrations or backing up your data.
-
-        With this modern and stable contacts manager you can protect your contacts by not sharing them with other apps, so you can keep your contacts private.
-
-        Like the contact source, you can also easily change the contact name, email, phone number, address, organization, groups and many other customizable fields. You can use it for storing contact events too, like birthdays, anniversaries, or any other custom ones.
-
-        This simple contact editor has many handy settings like showing phone numbers on the main screen, toggle contact thumbnail visibility, showing only contacts with phone numbers, showing a call confirmation dialog before initiating a call. It comes with a quick dialer that also makes use of letters.
-
-        To further improve the user experience, you can customize what happens at clicking on a contact. You can either initiate a call, go to the View Details screen, or edit the selected contact.
-
-        You can easily block phone numbers to avoid unwanted incoming calls.
-
-        To avoid showing potentially unwanted contacts, it has a powerful built in duplicate contact merger.
-
-        It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
-
-        Contains no ads or unnecessary permissions. It is fully opensource, provides customizable colors.
-
-        <b>Check out the full suite of Simple Tools here:</b>
-        https://www.simplemobiletools.com
-
-        <b>Standalone website of Simple Contacts Pro:</b>
-        https://www.simplemobiletools.com/contacts
-
-        <b>Facebook:</b>
-        https://www.facebook.com/simplemobiletools
-
-        <b>Reddit:</b>
-        https://www.reddit.com/r/SimpleMobileTools
+        Don\'s Directory mobile app. Visit www.donsdirectory.com to sign up for the service.
     </string>
-    <string name="login">Log-in</string>
+
+    <string name="AppName">Don\'s Directory</string>
+
+    <!-- Help texts for the text boxes
+    Help text is what displays before the user clicks inside the box. -->
+    <string name="UsernameHelpText">Username</string>
+    <string name="PasswordHelpText">Password</string>
+
+    <!-- Text to display on buttons -->
+    <string name="LoginButtonText">Log-in</string>
+    <string name="SubscribeButtonText">Subscribe</string>
+    <string name="RecoveryButtonText">Recovery</string>
+
+    <!-- Required text which describes the image -->
+    <string name="ImageDescription">Don\'s Directory logo</string>
+
+    <!-- Help text for the search bar text box -->
+    <string name="SearchHelpText">Search in Don\'s Directory and your phone book</string>
+
+    <string name="SearchButtonDescription">Click to search in Don\'s Directory and my phone book</string>
+
+    <!-- Text appearing underneath the search box when highlighted, giving search suggestions -->
+    <string name="SearchHint">Search</string>
+
+    <!-- These fields will be replaced by the layout filler function -->
+    <string name="primaryText">ADESCO-Advance Drilling Equipment Supply Co.</string>
+    <string name="secondaryText">Drilling, Completions Consultant</string>
+
+    <string name="selected_contacts">Selected Contacts</string>
+    <string name="colors">Colors</string>
+    <string name="select">Select</string>
+    <string name="select_none">Select None</string>
+
+    <string name="contact_image">Contact Image</string>
+    <string name="search">Search</string>
+    <string name="search_hint">Search…</string>
+    <string name="selection_tick_view_large">SelectionTickViewLarge</string>
+
+    <string name="add_new_contact">Add new contact</string>
+
+    <string name="SwitchTitle">Switch</string>
 
     <!--
         Haven't found some strings? There's more at

@@ -35,6 +35,10 @@
         android:title="@string/settings"
         app:showAsAction="never"/>
     <item
+        android:id="@+id/login"
+        android:title="Log-in"
+        app:showAsAction="never"/>
+    <item
         android:id="@+id/about"
         android:title="@string/about"
         app:showAsAction="never"/>

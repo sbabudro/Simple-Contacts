@@ -17,6 +17,7 @@ import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.viewpager.widget.ViewPager
+import com.donsdirectory.donsdirlib.activities.LoginActivity
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
@@ -209,6 +210,7 @@ class MainActivity : SimpleActivity(), RefreshContactsListener {
             R.id.import_contacts -> tryImportContacts()
             R.id.export_contacts -> tryExportContacts()
             R.id.settings -> startActivity(Intent(applicationContext, SettingsActivity::class.java))
+            R.id.login -> startActivity(Intent(applicationContext, LoginActivity::class.java))
             R.id.about -> launchAbout()
             else -> return super.onOptionsItemSelected(item)
         }

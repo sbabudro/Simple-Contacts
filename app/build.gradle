@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId "com.simplemobiletools.contacts.pro"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 29
         versionCode 75
         versionName "6.12.7"
@@ -58,9 +58,10 @@ android {
 
 dependencies {
     implementation 'com.simplemobiletools:commons:5.29.20'
-    implementation 'joda-time:joda-time:2.10.1'
+    implementation 'joda-time:joda-time:2.10.6'
     implementation 'com.googlecode.ez-vcard:ez-vcard:0.10.5'
     implementation 'com.github.tibbi:IndicatorFastScroll:08f512858a'
+    implementation project(path: ':donsdirlib')
 
     kapt "androidx.room:room-compiler:2.2.5"
     implementation "androidx.room:room-runtime:2.2.5"
