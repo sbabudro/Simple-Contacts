@@ -28,20 +28,20 @@ class SettingsActivity : SimpleActivity() {
     override fun onResume() {
         super.onResume()
 
-        setupCustomizeColors()
-        setupManageShownContactFields()
-        setupManageShownTabs()
+//        setupCustomizeColors()
+//        setupManageShownContactFields()
+//        setupManageShownTabs()
         setupFontSize()
-        setupUseEnglish()
-        setupShowContactThumbnails()
-        setupShowPhoneNumbers()
-        setupShowContactsWithNumbers()
+//        setupUseEnglish()
+//        setupShowContactThumbnails()
+//        setupShowPhoneNumbers()
+//        setupShowContactsWithNumbers()
         setupStartNameWithSurname()
-        setupShowCallConfirmation()
-        setupShowDialpadButton()
-        setupShowPrivateContacts()
-        setupOnContactClick()
-        setupDefaultTab()
+//        setupShowCallConfirmation()
+//        setupShowDialpadButton()
+//        setupShowPrivateContacts()
+//        setupOnContactClick()
+//        setupDefaultTab()
         updateTextColors(settings_holder)
         invalidateOptionsMenu()
     }
@@ -51,39 +51,39 @@ class SettingsActivity : SimpleActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    private fun setupCustomizeColors() {
-        settings_customize_colors_holder.setOnClickListener {
-            startCustomizationActivity()
-        }
-    }
+//    private fun setupCustomizeColors() {
+//        settings_customize_colors_holder.setOnClickListener {
+//            startCustomizationActivity()
+//        }
+//    }
 
-    private fun setupManageShownContactFields() {
-        settings_manage_contact_fields_holder.setOnClickListener {
-            ManageVisibleFieldsDialog(this)
-        }
-    }
+//    private fun setupManageShownContactFields() {
+//        settings_manage_contact_fields_holder.setOnClickListener {
+//            ManageVisibleFieldsDialog(this)
+//        }
+//    }
 
-    private fun setupManageShownTabs() {
-        settings_manage_tabs_holder.setOnClickListener {
-            ManageVisibleTabsDialog(this)
-        }
-    }
+//    private fun setupManageShownTabs() {
+//        settings_manage_tabs_holder.setOnClickListener {
+//            ManageVisibleTabsDialog(this)
+//        }
+//    }
 
-    private fun setupDefaultTab() {
-        settings_default_tab.text = getDefaultTabText()
-        settings_default_tab_holder.setOnClickListener {
-            val items = arrayListOf(
-                RadioItem(TAB_CONTACTS, getString(R.string.contacts_tab)),
-                RadioItem(TAB_FAVORITES, getString(R.string.favorites_tab)),
-                RadioItem(TAB_GROUPS, getString(R.string.groups_tab)),
-                RadioItem(TAB_LAST_USED, getString(R.string.last_used_tab)))
-
-            RadioGroupDialog(this@SettingsActivity, items, config.defaultTab) {
-                config.defaultTab = it as Int
-                settings_default_tab.text = getDefaultTabText()
-            }
-        }
-    }
+//    private fun setupDefaultTab() {
+//        settings_default_tab.text = getDefaultTabText()
+//        settings_default_tab_holder.setOnClickListener {
+//            val items = arrayListOf(
+//                RadioItem(TAB_CONTACTS, getString(R.string.contacts_tab)),
+//                RadioItem(TAB_FAVORITES, getString(R.string.favorites_tab)),
+//                RadioItem(TAB_GROUPS, getString(R.string.groups_tab)),
+//                RadioItem(TAB_LAST_USED, getString(R.string.last_used_tab)))
+//
+//            RadioGroupDialog(this@SettingsActivity, items, config.defaultTab) {
+//                config.defaultTab = it as Int
+//                settings_default_tab.text = getDefaultTabText()
+//            }
+//        }
+//    }
 
     private fun getDefaultTabText() = getString(when (baseConfig.defaultTab) {
         TAB_CONTACTS -> R.string.contacts_tab
@@ -108,39 +108,39 @@ class SettingsActivity : SimpleActivity() {
         }
     }
 
-    private fun setupUseEnglish() {
-        settings_use_english_holder.beVisibleIf(config.wasUseEnglishToggled || Locale.getDefault().language != "en")
-        settings_use_english.isChecked = config.useEnglish
-        settings_use_english_holder.setOnClickListener {
-            settings_use_english.toggle()
-            config.useEnglish = settings_use_english.isChecked
-            System.exit(0)
-        }
-    }
+//    private fun setupUseEnglish() {
+//        settings_use_english_holder.beVisibleIf(config.wasUseEnglishToggled || Locale.getDefault().language != "en")
+//        settings_use_english.isChecked = config.useEnglish
+//        settings_use_english_holder.setOnClickListener {
+//            settings_use_english.toggle()
+//            config.useEnglish = settings_use_english.isChecked
+//            System.exit(0)
+//        }
+//    }
 
-    private fun setupShowContactThumbnails() {
-        settings_show_contact_thumbnails.isChecked = config.showContactThumbnails
-        settings_show_contact_thumbnails_holder.setOnClickListener {
-            settings_show_contact_thumbnails.toggle()
-            config.showContactThumbnails = settings_show_contact_thumbnails.isChecked
-        }
-    }
+//    private fun setupShowContactThumbnails() {
+//        settings_show_contact_thumbnails.isChecked = config.showContactThumbnails
+//        settings_show_contact_thumbnails_holder.setOnClickListener {
+//            settings_show_contact_thumbnails.toggle()
+//            config.showContactThumbnails = settings_show_contact_thumbnails.isChecked
+//        }
+//    }
 
-    private fun setupShowPhoneNumbers() {
-        settings_show_phone_numbers.isChecked = config.showPhoneNumbers
-        settings_show_phone_numbers_holder.setOnClickListener {
-            settings_show_phone_numbers.toggle()
-            config.showPhoneNumbers = settings_show_phone_numbers.isChecked
-        }
-    }
+//    private fun setupShowPhoneNumbers() {
+//        settings_show_phone_numbers.isChecked = config.showPhoneNumbers
+//        settings_show_phone_numbers_holder.setOnClickListener {
+//            settings_show_phone_numbers.toggle()
+//            config.showPhoneNumbers = settings_show_phone_numbers.isChecked
+//        }
+//    }
 
-    private fun setupShowContactsWithNumbers() {
-        settings_show_only_contacts_with_numbers.isChecked = config.showOnlyContactsWithNumbers
-        settings_show_only_contacts_with_numbers_holder.setOnClickListener {
-            settings_show_only_contacts_with_numbers.toggle()
-            config.showOnlyContactsWithNumbers = settings_show_only_contacts_with_numbers.isChecked
-        }
-    }
+//    private fun setupShowContactsWithNumbers() {
+//        settings_show_only_contacts_with_numbers.isChecked = config.showOnlyContactsWithNumbers
+//        settings_show_only_contacts_with_numbers_holder.setOnClickListener {
+//            settings_show_only_contacts_with_numbers.toggle()
+//            config.showOnlyContactsWithNumbers = settings_show_only_contacts_with_numbers.isChecked
+//        }
+//    }
 
     private fun setupStartNameWithSurname() {
         settings_start_with_surname.isChecked = config.startNameWithSurname
@@ -150,48 +150,48 @@ class SettingsActivity : SimpleActivity() {
         }
     }
 
-    private fun setupShowDialpadButton() {
-        settings_show_dialpad_button.isChecked = config.showDialpadButton
-        settings_show_dialpad_button_holder.setOnClickListener {
-            settings_show_dialpad_button.toggle()
-            config.showDialpadButton = settings_show_dialpad_button.isChecked
-        }
-    }
+//    private fun setupShowDialpadButton() {
+//        settings_show_dialpad_button.isChecked = config.showDialpadButton
+//        settings_show_dialpad_button_holder.setOnClickListener {
+//            settings_show_dialpad_button.toggle()
+//            config.showDialpadButton = settings_show_dialpad_button.isChecked
+//        }
+//    }
 
-    private fun setupShowPrivateContacts() {
-        settings_show_private_contacts.isChecked = config.showPrivateContacts
-        settings_show_private_contacts_holder.setOnClickListener {
-            settings_show_private_contacts.toggle()
-            config.showPrivateContacts = settings_show_private_contacts.isChecked
-        }
-    }
+//    private fun setupShowPrivateContacts() {
+//        settings_show_private_contacts.isChecked = config.showPrivateContacts
+//        settings_show_private_contacts_holder.setOnClickListener {
+//            settings_show_private_contacts.toggle()
+//            config.showPrivateContacts = settings_show_private_contacts.isChecked
+//        }
+//    }
 
-    private fun setupOnContactClick() {
-        settings_on_contact_click.text = getOnContactClickText()
-        settings_on_contact_click_holder.setOnClickListener {
-            val items = arrayListOf(
-                RadioItem(ON_CLICK_CALL_CONTACT, getString(R.string.call_contact)),
-                RadioItem(ON_CLICK_VIEW_CONTACT, getString(R.string.view_contact)),
-                RadioItem(ON_CLICK_EDIT_CONTACT, getString(R.string.edit_contact)))
+//    private fun setupOnContactClick() {
+//        settings_on_contact_click.text = getOnContactClickText()
+//        settings_on_contact_click_holder.setOnClickListener {
+//            val items = arrayListOf(
+//                RadioItem(ON_CLICK_CALL_CONTACT, getString(R.string.call_contact)),
+//                RadioItem(ON_CLICK_VIEW_CONTACT, getString(R.string.view_contact)),
+//                RadioItem(ON_CLICK_EDIT_CONTACT, getString(R.string.edit_contact)))
+//
+//            RadioGroupDialog(this@SettingsActivity, items, config.onContactClick) {
+//                config.onContactClick = it as Int
+//                settings_on_contact_click.text = getOnContactClickText()
+//            }
+//        }
+//    }
 
-            RadioGroupDialog(this@SettingsActivity, items, config.onContactClick) {
-                config.onContactClick = it as Int
-                settings_on_contact_click.text = getOnContactClickText()
-            }
-        }
-    }
-
-    private fun getOnContactClickText() = getString(when (config.onContactClick) {
-        ON_CLICK_CALL_CONTACT -> R.string.call_contact
-        ON_CLICK_VIEW_CONTACT -> R.string.view_contact
-        else -> R.string.edit_contact
-    })
-
-    private fun setupShowCallConfirmation() {
-        settings_show_call_confirmation.isChecked = config.showCallConfirmation
-        settings_show_call_confirmation_holder.setOnClickListener {
-            settings_show_call_confirmation.toggle()
-            config.showCallConfirmation = settings_show_call_confirmation.isChecked
-        }
-    }
+//    private fun getOnContactClickText() = getString(when (config.onContactClick) {
+//        ON_CLICK_CALL_CONTACT -> R.string.call_contact
+//        ON_CLICK_VIEW_CONTACT -> R.string.view_contact
+//        else -> R.string.edit_contact
+//    })
+//
+//    private fun setupShowCallConfirmation() {
+//        settings_show_call_confirmation.isChecked = config.showCallConfirmation
+//        settings_show_call_confirmation_holder.setOnClickListener {
+//            settings_show_call_confirmation.toggle()
+//            config.showCallConfirmation = settings_show_call_confirmation.isChecked
+//        }
+//    }
 }
