@@ -17,7 +17,7 @@ import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.viewpager.widget.ViewPager
-import com.donsdirectory.donsdirlib.activities.LoginActivity
+//import com.donsdirectory.donsdirlib.activities.LoginActivity
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
@@ -219,9 +219,9 @@ class MainActivity : SimpleActivity(), RefreshContactsListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
         super.onActivityResult(requestCode, resultCode, resultData)
-        if (requestCode == PICK_IMPORT_SOURCE_INTENT && resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
+        if (requestCode == PICK_IMPORT_SOURCE_INTENT && resultCode == RESULT_OK && resultData != null && resultData.data != null) {
             tryImportContactsFromFile(resultData.data!!)
-        } else if (requestCode == PICK_EXPORT_FILE_INTENT && resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
+        } else if (requestCode == PICK_EXPORT_FILE_INTENT && resultCode == RESULT_OK && resultData != null && resultData.data != null) {
             try {
                 val outputStream = contentResolver.openOutputStream(resultData.data!!)
                 exportContactsTo(ignoredExportContactSources, outputStream)
@@ -245,7 +245,7 @@ class MainActivity : SimpleActivity(), RefreshContactsListener {
     }
 
     private fun setupSearch(menu: Menu) {
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
         searchMenuItem = menu.findItem(R.id.search)
         (searchMenuItem!!.actionView as SearchView).apply {
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
