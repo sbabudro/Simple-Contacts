@@ -22,14 +22,14 @@
         android:icon="@drawable/ic_dialpad_vector"
         android:title="@string/dialpad"
         app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/import_contacts"
-        android:title="@string/import_contacts_from_vcf"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/export_contacts"
-        android:title="@string/export_contacts_to_vcf"
-        app:showAsAction="never"/>
+<!--    <item-->
+<!--        android:id="@+id/import_contacts"-->
+<!--        android:title="@string/import_contacts_from_vcf"-->
+<!--        app:showAsAction="never"/>-->
+<!--    <item-->
+<!--        android:id="@+id/export_contacts"-->
+<!--        android:title="@string/export_contacts_to_vcf"-->
+<!--        app:showAsAction="never"/>-->
     <item
         android:id="@+id/settings"
         android:title="@string/settings"
@@ -38,8 +38,8 @@
         android:id="@+id/login"
         android:title="Log-in"
         app:showAsAction="never"/>
-    <item
-        android:id="@+id/about"
-        android:title="@string/about"
-        app:showAsAction="never"/>
+<!--    <item-->
+<!--        android:id="@+id/about"-->
+<!--        android:title="@string/about"-->
+<!--        app:showAsAction="never"/>-->
 </menu>

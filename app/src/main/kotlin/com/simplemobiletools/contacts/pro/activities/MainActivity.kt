@@ -17,7 +17,7 @@ import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.viewpager.widget.ViewPager
-//import com.donsdirectory.donsdirlib.activities.LoginActivity
+import com.donsdirectory.donsdirlib.activities.LoginActivity
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
@@ -74,7 +74,7 @@ class MainActivity : SimpleActivity(), RefreshContactsListener {
         storeStateVariables()
         setupTabColors()
         checkContactPermissions()
-        checkWhatsNewDialog()
+//        checkWhatsNewDialog()
         checkDialerMigrationDialog()
     }
 
@@ -207,11 +207,11 @@ class MainActivity : SimpleActivity(), RefreshContactsListener {
             R.id.sort -> showSortingDialog()
             R.id.filter -> showFilterDialog()
             R.id.dialpad -> launchDialpad()
-            R.id.import_contacts -> tryImportContacts()
-            R.id.export_contacts -> tryExportContacts()
+//            R.id.import_contacts -> tryImportContacts()
+//            R.id.export_contacts -> tryExportContacts()
             R.id.settings -> startActivity(Intent(applicationContext, SettingsActivity::class.java))
             R.id.login -> startActivity(Intent(applicationContext, LoginActivity::class.java))
-            R.id.about -> launchAbout()
+//            R.id.about -> launchAbout()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
@@ -220,11 +220,11 @@ class MainActivity : SimpleActivity(), RefreshContactsListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
         super.onActivityResult(requestCode, resultCode, resultData)
         if (requestCode == PICK_IMPORT_SOURCE_INTENT && resultCode == RESULT_OK && resultData != null && resultData.data != null) {
-            tryImportContactsFromFile(resultData.data!!)
+//            tryImportContactsFromFile(resultData.data!!)
         } else if (requestCode == PICK_EXPORT_FILE_INTENT && resultCode == RESULT_OK && resultData != null && resultData.data != null) {
             try {
                 val outputStream = contentResolver.openOutputStream(resultData.data!!)
-                exportContactsTo(ignoredExportContactSources, outputStream)
+//                exportContactsTo(ignoredExportContactSources, outputStream)
             } catch (e: Exception) {
                 showErrorToast(e)
             }
@@ -393,7 +393,7 @@ class MainActivity : SimpleActivity(), RefreshContactsListener {
         )
 
         if (intent?.action == Intent.ACTION_VIEW && intent.data != null) {
-            tryImportContactsFromFile(intent.data!!)
+//            tryImportContactsFromFile(intent.data!!)
             intent.data = null
         }
 
@@ -446,115 +446,115 @@ class MainActivity : SimpleActivity(), RefreshContactsListener {
         }
     }
 
-    private fun tryImportContacts() {
-        if (isQPlus()) {
-            Intent(Intent.ACTION_GET_CONTENT).apply {
-                addCategory(Intent.CATEGORY_OPENABLE)
-                type = "text/x-vcard"
-                startActivityForResult(this, PICK_IMPORT_SOURCE_INTENT)
-            }
-        } else {
-            handlePermission(PERMISSION_READ_STORAGE) {
-                if (it) {
-                    importContacts()
-                }
-            }
-        }
-    }
+//    private fun tryImportContacts() {
+//        if (isQPlus()) {
+//            Intent(Intent.ACTION_GET_CONTENT).apply {
+//                addCategory(Intent.CATEGORY_OPENABLE)
+//                type = "text/x-vcard"
+//                startActivityForResult(this, PICK_IMPORT_SOURCE_INTENT)
+//            }
+//        } else {
+//            handlePermission(PERMISSION_READ_STORAGE) {
+//                if (it) {
+//                    importContacts()
+//                }
+//            }
+//        }
+//    }
 
-    private fun importContacts() {
-        FilePickerDialog(this) {
-            showImportContactsDialog(it)
-        }
-    }
+//    private fun importContacts() {
+//        FilePickerDialog(this) {
+//            showImportContactsDialog(it)
+//        }
+//    }
 
-    private fun showImportContactsDialog(path: String) {
-        ImportContactsDialog(this, path) {
-            if (it) {
-                runOnUiThread {
-                    refreshContacts(ALL_TABS_MASK)
-                }
-            }
-        }
-    }
+//    private fun showImportContactsDialog(path: String) {
+//        ImportContactsDialog(this, path) {
+//            if (it) {
+//                runOnUiThread {
+//                    refreshContacts(ALL_TABS_MASK)
+//                }
+//            }
+//        }
+//    }
 
-    private fun tryImportContactsFromFile(uri: Uri) {
-        when {
-            uri.scheme == "file" -> showImportContactsDialog(uri.path!!)
-            uri.scheme == "content" -> {
-                val tempFile = getTempFile()
-                if (tempFile == null) {
-                    toast(R.string.unknown_error_occurred)
-                    return
-                }
+//    private fun tryImportContactsFromFile(uri: Uri) {
+//        when {
+//            uri.scheme == "file" -> showImportContactsDialog(uri.path!!)
+//            uri.scheme == "content" -> {
+//                val tempFile = getTempFile()
+//                if (tempFile == null) {
+//                    toast(R.string.unknown_error_occurred)
+//                    return
+//                }
+//
+//                try {
+//                    val inputStream = contentResolver.openInputStream(uri)
+//                    val out = FileOutputStream(tempFile)
+//                    inputStream!!.copyTo(out)
+//                    showImportContactsDialog(tempFile.absolutePath)
+//                } catch (e: Exception) {
+//                    showErrorToast(e)
+//                }
+//            }
+//            else -> toast(R.string.invalid_file_format)
+//        }
+//    }
 
-                try {
-                    val inputStream = contentResolver.openInputStream(uri)
-                    val out = FileOutputStream(tempFile)
-                    inputStream!!.copyTo(out)
-                    showImportContactsDialog(tempFile.absolutePath)
-                } catch (e: Exception) {
-                    showErrorToast(e)
-                }
-            }
-            else -> toast(R.string.invalid_file_format)
-        }
-    }
+//    private fun tryExportContacts() {
+//        if (isQPlus()) {
+//            ExportContactsDialog(this, config.lastExportPath, true) { file, ignoredContactSources ->
+//                ignoredExportContactSources = ignoredContactSources
+//
+//                Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+//                    type = "text/x-vcard"
+//                    putExtra(Intent.EXTRA_TITLE, file.name)
+//                    addCategory(Intent.CATEGORY_OPENABLE)
+//
+//                    startActivityForResult(this, PICK_EXPORT_FILE_INTENT)
+//                }
+//            }
+//        } else {
+//            handlePermission(PERMISSION_WRITE_STORAGE) {
+//                if (it) {
+//                    ExportContactsDialog(this, config.lastExportPath, false) { file, ignoredContactSources ->
+//                        getFileOutputStream(file.toFileDirItem(this), true) {
+//                            exportContactsTo(ignoredContactSources, it)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 
-    private fun tryExportContacts() {
-        if (isQPlus()) {
-            ExportContactsDialog(this, config.lastExportPath, true) { file, ignoredContactSources ->
-                ignoredExportContactSources = ignoredContactSources
+//    private fun exportContactsTo(ignoredContactSources: HashSet<String>, outputStream: OutputStream?) {
+//        ContactsHelper(this).getContacts(true, ignoredContactSources) { contacts ->
+//            if (contacts.isEmpty()) {
+//                toast(R.string.no_entries_for_exporting)
+//            } else {
+//                VcfExporter().exportContacts(this, outputStream, contacts, true) { result ->
+//                    toast(when (result) {
+//                        VcfExporter.ExportResult.EXPORT_OK -> R.string.exporting_successful
+//                        VcfExporter.ExportResult.EXPORT_PARTIAL -> R.string.exporting_some_entries_failed
+//                        else -> R.string.exporting_failed
+//                    })
+//                }
+//            }
+//        }
+//    }
 
-                Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                    type = "text/x-vcard"
-                    putExtra(Intent.EXTRA_TITLE, file.name)
-                    addCategory(Intent.CATEGORY_OPENABLE)
-
-                    startActivityForResult(this, PICK_EXPORT_FILE_INTENT)
-                }
-            }
-        } else {
-            handlePermission(PERMISSION_WRITE_STORAGE) {
-                if (it) {
-                    ExportContactsDialog(this, config.lastExportPath, false) { file, ignoredContactSources ->
-                        getFileOutputStream(file.toFileDirItem(this), true) {
-                            exportContactsTo(ignoredContactSources, it)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private fun exportContactsTo(ignoredContactSources: HashSet<String>, outputStream: OutputStream?) {
-        ContactsHelper(this).getContacts(true, ignoredContactSources) { contacts ->
-            if (contacts.isEmpty()) {
-                toast(R.string.no_entries_for_exporting)
-            } else {
-                VcfExporter().exportContacts(this, outputStream, contacts, true) { result ->
-                    toast(when (result) {
-                        VcfExporter.ExportResult.EXPORT_OK -> R.string.exporting_successful
-                        VcfExporter.ExportResult.EXPORT_PARTIAL -> R.string.exporting_some_entries_failed
-                        else -> R.string.exporting_failed
-                    })
-                }
-            }
-        }
-    }
-
-    private fun launchAbout() {
-        val licenses = LICENSE_JODA or LICENSE_GLIDE or LICENSE_GSON or LICENSE_INDICATOR_FAST_SCROLL
-
-        val faqItems = arrayListOf(
-            FAQItem(R.string.faq_1_title, R.string.faq_1_text),
-            FAQItem(R.string.faq_2_title_commons, R.string.faq_2_text_commons),
-            FAQItem(R.string.faq_6_title_commons, R.string.faq_6_text_commons),
-            FAQItem(R.string.faq_7_title_commons, R.string.faq_7_text_commons)
-        )
-
-        startAboutActivity(R.string.app_name, licenses, BuildConfig.VERSION_NAME, faqItems, true)
-    }
+//    private fun launchAbout() {
+//        val licenses = LICENSE_JODA or LICENSE_GLIDE or LICENSE_GSON or LICENSE_INDICATOR_FAST_SCROLL
+//
+//        val faqItems = arrayListOf(
+//            FAQItem(R.string.faq_1_title, R.string.faq_1_text),
+//            FAQItem(R.string.faq_2_title_commons, R.string.faq_2_text_commons),
+//            FAQItem(R.string.faq_6_title_commons, R.string.faq_6_text_commons),
+//            FAQItem(R.string.faq_7_title_commons, R.string.faq_7_text_commons)
+//        )
+//
+//        startAboutActivity(R.string.app_name, licenses, BuildConfig.VERSION_NAME, faqItems, true)
+//    }
 
     override fun refreshContacts(refreshTabsMask: Int) {
         if (isDestroyed || isFinishing || isGettingContacts) {
@@ -624,21 +624,21 @@ class MainActivity : SimpleActivity(), RefreshContactsListener {
         }
     }
 
-    private fun checkWhatsNewDialog() {
-        arrayListOf<Release>().apply {
-            add(Release(10, R.string.release_10))
-            add(Release(11, R.string.release_11))
-            add(Release(16, R.string.release_16))
-            add(Release(27, R.string.release_27))
-            add(Release(29, R.string.release_29))
-            add(Release(31, R.string.release_31))
-            add(Release(32, R.string.release_32))
-            add(Release(34, R.string.release_34))
-            add(Release(39, R.string.release_39))
-            add(Release(40, R.string.release_40))
-            add(Release(47, R.string.release_47))
-            add(Release(56, R.string.release_56))
-            checkWhatsNew(this, BuildConfig.VERSION_CODE)
-        }
-    }
+//    private fun checkWhatsNewDialog() {
+//        arrayListOf<Release>().apply {
+//            add(Release(10, R.string.release_10))
+//            add(Release(11, R.string.release_11))
+//            add(Release(16, R.string.release_16))
+//            add(Release(27, R.string.release_27))
+//            add(Release(29, R.string.release_29))
+//            add(Release(31, R.string.release_31))
+//            add(Release(32, R.string.release_32))
+//            add(Release(34, R.string.release_34))
+//            add(Release(39, R.string.release_39))
+//            add(Release(40, R.string.release_40))
+//            add(Release(47, R.string.release_47))
+//            add(Release(56, R.string.release_56))
+//            checkWhatsNew(this, BuildConfig.VERSION_CODE)
+//        }
+//    }
 }
