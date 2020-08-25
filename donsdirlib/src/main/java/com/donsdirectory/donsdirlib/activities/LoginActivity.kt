@@ -14,6 +14,7 @@ import com.android.volley.toolbox.Volley
 import com.donsdirectory.donsdirlib.R
 //import androidx.lifecycle.MutableLiveData
 import kotlinx.android.synthetic.main.activity_login.*
+import org.json.JSONException
 import kotlin.properties.Delegates
 
 const val SUCCESS = true
@@ -35,9 +36,9 @@ class LoginActivity : AppCompatActivity() {
         LoginButton.setOnClickListener {
             Log.d("ShowMeOnly", "clicked")
             val loginResult = authenticateLogin(username.text, password.text)
-            if(loginResult == 1) {
+            if(loginResult == 2) {
                 makeToast("Log-in Successful!")
-                finish()
+//                finish()
                 //TODO: change main activity using logged-in state (maybe pass a success/fail variable?)
             } else if(loginResult == 0) {
                 makeToast("Invalid username or password")
@@ -68,29 +69,60 @@ class LoginActivity : AppCompatActivity() {
             return 0
         }
 
-        Log.d("ShowMeOnly","Authentication Started")
         makeToast("Authenticating...")
-        Log.d("ShowMeOnly","Toast shown")
         var token: String = ""
-        var loginResult: Int = 999
+        var loginResult: Int? = null
         var errorStr: String = ""
 
         val queue = Volley.newRequestQueue(this)
-        var request = "http://dict.org/"
+        var request = "https://dev.donsdirectory.com/api_auth.php?u=$username"
         var stringRequest = StringRequest(Request.Method.GET, request,
-                { response -> token = response },
+                { response -> while(response == null){}
+                token = response
+                },
                 { error ->
                     errorStr = error.toString()
                     Log.d("ShowMeOnly", "Error is $errorStr")
                 })
+
         queue.add(stringRequest)
-        Log.d("ShowMeOnly", "Token is $token")
+        Log.d("ShowMeOnly","Token: $token")
+
         request = "https://dev.donsdirectory.com/api_auth.php?t=$token&p=$password"
         stringRequest = StringRequest(Request.Method.GET, request,
-                { response -> loginResult = response.toInt() },
+                { response -> while(response == null){}
+                    loginResult = response.toInt() },
                 {  })
         queue.add(stringRequest)
-        Log.d("ShowMeOnly","$loginResult")
+        Log.d("ShowMeOnly","Login Result: $loginResult")
         return loginResult ?: -1
     }
 }
+
+//        makeToast("Authenticating...")
+//        Log.d("button: ","clicked")
+//        val requestQueue = Volley.newRequestQueue(this)
+//        var feedback: String? = null
+//        var url = "https://dev.donsdirectory.com/api_auth.php?u=$username"
+//        var stringRequest = StringRequest(Request.Method.GET, url,
+//                { response -> if(response == null) {
+//                    textView.text = "Failed"
+//                } else {
+//                    feedback = response
+//                    textView.text = "Token: $response"
+//                }},
+//                { error -> Log.d("error: ", error.toString())})
+//        requestQueue.add(stringRequest)
+//        url = "https://dev.donsdirectory.com/api_auth.php?t=$feedback&p=$password"
+//        stringRequest = StringRequest(Request.Method.GET, url,
+//                { response -> if(response == null) {
+//                    textView.text = "Failed"
+//                } else {
+//                    textView.text = "Token: $response"
+//                }},
+//                { error -> Log.d("error: ", error.toString())})
+//        requestQueue.add(stringRequest)
+//        return 1
+////        return loginResult ?: -1
+//    }
+//}
