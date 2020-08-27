@@ -68,61 +68,60 @@ class LoginActivity : AppCompatActivity() {
             makeToast("Password cannot be blank")
             return 0
         }
-
         makeToast("Authenticating...")
-        var token: String = ""
-        var loginResult: Int? = null
-        var errorStr: String = ""
-
-        val queue = Volley.newRequestQueue(this)
-        var request = "https://dev.donsdirectory.com/api_auth.php?u=$username"
-        var stringRequest = StringRequest(Request.Method.GET, request,
-                { response -> while(response == null){}
-                token = response
-                },
-                { error ->
-                    errorStr = error.toString()
-                    Log.d("ShowMeOnly", "Error is $errorStr")
-                })
-
-        queue.add(stringRequest)
-        Log.d("ShowMeOnly","Token: $token")
-
-        request = "https://dev.donsdirectory.com/api_auth.php?t=$token&p=$password"
-        stringRequest = StringRequest(Request.Method.GET, request,
-                { response -> while(response == null){}
-                    loginResult = response.toInt() },
-                {  })
-        queue.add(stringRequest)
-        Log.d("ShowMeOnly","Login Result: $loginResult")
-        return loginResult ?: -1
+        Log.d("button: ","clicked")
+        val requestQueue = Volley.newRequestQueue(this)
+        var feedback: String? = null
+        var url = "https://dev.donsdirectory.com/api_auth.php?u=$username"
+        var stringRequest = StringRequest(Request.Method.GET, url,
+                { response -> if(response == null) {
+                    textView.text = "Failed"
+                } else {
+                    feedback = response
+                    textView.text = "Token: $response"
+                }},
+                { error -> Log.d("error: ", error.toString())})
+        requestQueue.add(stringRequest)
+        url = "https://dev.donsdirectory.com/api_auth.php?t=$feedback&p=$password"
+        stringRequest = StringRequest(Request.Method.GET, url,
+                { response -> if(response == null) {
+//                    textView.text = "Failed"
+                } else {
+//                    textView.text = "Token: $response"
+                }},
+                { error -> Log.d("error: ", error.toString())})
+        requestQueue.add(stringRequest)
+        return 1
     }
 }
-
 //        makeToast("Authenticating...")
-//        Log.d("button: ","clicked")
-//        val requestQueue = Volley.newRequestQueue(this)
-//        var feedback: String? = null
-//        var url = "https://dev.donsdirectory.com/api_auth.php?u=$username"
-//        var stringRequest = StringRequest(Request.Method.GET, url,
-//                { response -> if(response == null) {
-//                    textView.text = "Failed"
-//                } else {
-//                    feedback = response
-//                    textView.text = "Token: $response"
-//                }},
-//                { error -> Log.d("error: ", error.toString())})
-//        requestQueue.add(stringRequest)
-//        url = "https://dev.donsdirectory.com/api_auth.php?t=$feedback&p=$password"
-//        stringRequest = StringRequest(Request.Method.GET, url,
-//                { response -> if(response == null) {
-//                    textView.text = "Failed"
-//                } else {
-//                    textView.text = "Token: $response"
-//                }},
-//                { error -> Log.d("error: ", error.toString())})
-//        requestQueue.add(stringRequest)
-//        return 1
-////        return loginResult ?: -1
+//        var token: String = ""
+//        var loginResult: Int? = null
+//        var errorStr: String = ""
+//
+//        val queue = Volley.newRequestQueue(this)
+//        var request = "https://dev.donsdirectory.com/api_auth.php?u=$username"
+//        var stringRequest = StringRequest(Request.Method.GET, request,
+//                { response -> while(response == null){}
+//                token = response
+//                },
+//                { error ->
+//                    errorStr = error.toString()
+//                    Log.d("ShowMeOnly", "Error is $errorStr")
+//                })
+//
+//        queue.add(stringRequest)
+//        Log.d("ShowMeOnly","Token: $token")
+//
+//        request = "https://dev.donsdirectory.com/api_auth.php?t=$token&p=$password"
+//        stringRequest = StringRequest(Request.Method.GET, request,
+//                { response2 -> while(response2 == null){}
+//                    loginResult = response2.toInt() },
+//                {  })
+//        queue.add(stringRequest)
+//        Log.d("ShowMeOnly","Login Result: $loginResult")
+//        return loginResult ?: -1
 //    }
 //}
+
+
