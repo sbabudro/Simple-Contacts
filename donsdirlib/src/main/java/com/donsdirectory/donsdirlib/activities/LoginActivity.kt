@@ -33,23 +33,50 @@ class LoginActivity : AppCompatActivity() {
 //    private val selectionModeGroup = MutableLiveData<Int>()
 //    private var colorDefault: Int? = null
 
+    var authenticated: Int? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         Log.d("ShowMeOnly", "Login page started")
 
         LoginButton.setOnClickListener {
-            Log.d("ShowMeOnly", "clicked")
-            val loginResult = authenticateLogin(username.text, password.text)
-            Log.d("ShowMeOnly",loginResult.toString())
-            if (loginResult == 1) {
-                makeToast("Log-in Successful!")
+//            Log.d("ShowMeOnly", "clicked")
+//            val loginResult = authenticateLogin(username.text, password.text)
+//            Log.d("ShowMeOnly",loginResult.toString())
+//            if (loginResult == 1) {
+//                makeToast("Log-in Successful!")
+//                finish()
+//                //TODO: change main activity using logged-in state (maybe pass a success/fail variable?)
+//            } else if (loginResult == 0) {
+//                makeToast("Invalid username or password")
+//            } else if (loginResult == -1) {
+//                makeToast("Connection failed!")
+//            }
+
+            if (username.text.toString().isEmpty() && password.text.toString().isEmpty()) {
+                makeToast("Usernames and passwords cannot be blank")
+            } else {
+                makeToast("Authenticating...")
+                Log.d("button: ", "clicked")
+                val requestQueue = Volley.newRequestQueue(this)
+                checkUsername(username.text.toString(), requestQueue)
+                when (authenticated) {
+                    1 -> makeToast("Log-in Successful!")
+                    0 -> makeToast("Invalid username or password")
+                    else -> makeToast("Authentication in progress")
+                }
                 finish()
-                //TODO: change main activity using logged-in state (maybe pass a success/fail variable?)
-            } else if (loginResult == 0) {
-                makeToast("Invalid username or password")
-            } else if (loginResult == -1) {
-                makeToast("Connection failed!")
+//                } else if (authenticated == 1) {
+//                    makeToast("Log-in Successful!")
+//                    finish()
+//                    //TODO: change main activity using logged-in state (maybe pass a success/fail variable?)
+//                } else if (authenticated == 0) {
+//                    makeToast("Invalid username or password")
+//                } else if (authenticated == -1) {
+//                    makeToast("Connection failed!")
+//                }
+//            }
             }
         }
     }
@@ -65,12 +92,9 @@ class LoginActivity : AppCompatActivity() {
     //This function receives the username and password entered and performs a server call to check
     //if the login was successful before bringing the user to the main screen
 
-    private fun checkPassword(token: String, password: String, requestQueue: RequestQueue): Int? {
+    private fun checkPassword(token: String, password: String, requestQueue: RequestQueue) {
         val url = "https://dev.donsdirectory.com/api_auth.php?t=$token&p=$password"
-        var authenticated: Int? = null
         Log.d("URL", url)
-
-
 
         val stringRequest = StringRequest(Request.Method.GET, url,
                 { response ->
@@ -82,22 +106,13 @@ class LoginActivity : AppCompatActivity() {
                     }
                 },
                 { error -> Log.d("error: ", error.toString()) })
-
         requestQueue.add(stringRequest)
-
-
-
-
-
-        return authenticated
-
     }
 
-    private fun checkUsername(username: String, requestQueue: RequestQueue): Int? {
-        var finish: Int? = null
-
+    private fun checkUsername(username: String, requestQueue: RequestQueue) {
         val pwd = password.text.toString()
         Log.d("ShowMeOnly","Password: $pwd")
+        Log.d("ShowMeOnly","Username: $username")
         val encodedPassword: String = Base64.getEncoder().encodeToString(password.text.toString().toByteArray())
 
         val url = "https://dev.donsdirectory.com/api_auth.php?u=$username"
@@ -107,33 +122,31 @@ class LoginActivity : AppCompatActivity() {
                         Log.d("Houston","We have a problem")
                     } else {
                         Log.d("LoginActivity", "Token: $response")
-                        finish = checkPassword(response, encodedPassword, requestQueue)
+                        checkPassword(response, encodedPassword, requestQueue)
                     }
                 },
                 { error -> Log.d("error: ", error.toString()) }
         )
         requestQueue.add(stringRequest)
-
-        return finish
     }
 
 
-    private fun authenticateLogin(username: Editable, password: Editable): Int {
-
-        if (username.isBlank()) {
-            makeToast("Username cannot be blank")
-            return 0
-        }
-        if (password.isBlank()) {
-            makeToast("Password cannot be blank")
-            return 0
-        }
-        makeToast("Authenticating...")
-        Log.d("button: ", "clicked")
-        val requestQueue = Volley.newRequestQueue(this)
-
-        return checkUsername(username.toString(), requestQueue) ?: 0
-    }
+//    private fun authenticateLogin(username: Editable, password: Editable): Int {
+//
+//        if (username.isBlank()) {
+//            makeToast("Username cannot be blank")
+//            return 0
+//        }
+//        if (password.isBlank()) {
+//            makeToast("Password cannot be blank")
+//            return 0
+//        }
+//        makeToast("Authenticating...")
+//        Log.d("button: ", "clicked")
+//        val requestQueue = Volley.newRequestQueue(this)
+//
+//        return checkUsername(username.toString(), requestQueue) ?: 0
+//    }
 }
 
 //        timeout = calendar.get(Calendar.SECOND)
