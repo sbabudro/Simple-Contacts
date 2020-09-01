@@ -42,7 +42,15 @@ class LoginActivity : AppCompatActivity() {
             Log.d("ShowMeOnly", "clicked")
             val loginResult = authenticateLogin(username.text, password.text)
             Log.d("ShowMeOnly",loginResult.toString())
-
+            if (loginResult == 1) {
+                makeToast("Log-in Successful!")
+                finish()
+                //TODO: change main activity using logged-in state (maybe pass a success/fail variable?)
+            } else if (loginResult == 0) {
+                makeToast("Invalid username or password")
+            } else if (loginResult == -1) {
+                makeToast("Connection failed!")
+            }
         }
     }
 
@@ -71,15 +79,6 @@ class LoginActivity : AppCompatActivity() {
                     } else{
                         authenticated = response.toInt()
                         Log.d("Authentication","$authenticated")
-                        if (authenticated == 1) {
-                            makeToast("Log-in Successful!")
-                            finish()
-                            //TODO: change main activity using logged-in state (maybe pass a success/fail variable?)
-                        } else if (authenticated == 0) {
-                            makeToast("Invalid username or password")
-                        } else if (authenticated == -1) {
-                            makeToast("Connection failed!")
-                        }
                     }
                 },
                 { error -> Log.d("error: ", error.toString()) })
@@ -109,7 +108,6 @@ class LoginActivity : AppCompatActivity() {
                     } else {
                         Log.d("LoginActivity", "Token: $response")
                         finish = checkPassword(response, encodedPassword, requestQueue)
-
                     }
                 },
                 { error -> Log.d("error: ", error.toString()) }
