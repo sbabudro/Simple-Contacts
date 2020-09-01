@@ -79,6 +79,14 @@ class LoginActivity : AppCompatActivity() {
                     } else{
                         authenticated = response.toInt()
                         Log.d("Authentication","$authenticated")
+                        if (authenticated == 1) {
+                            makeToast("Log-in Successful!")
+                            finish()
+                        } else if (loginResult == 0) {
+                            makeToast("Invalid username or password")
+                        } else if (loginResult == -1) {
+                            makeToast("Connection failed!")
+                        }
                     }
                 },
                 { error -> Log.d("error: ", error.toString()) })
