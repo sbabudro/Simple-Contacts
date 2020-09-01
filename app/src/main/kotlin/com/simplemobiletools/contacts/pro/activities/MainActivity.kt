@@ -6,12 +6,16 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ShortcutInfo
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+import android.database.sqlite.SQLiteException
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Icon
 import android.graphics.drawable.LayerDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
@@ -27,6 +31,7 @@ import com.simplemobiletools.contacts.pro.BuildConfig
 import com.simplemobiletools.contacts.pro.R
 import com.simplemobiletools.contacts.pro.adapters.ViewPagerAdapter
 import com.simplemobiletools.contacts.pro.databases.ContactsDatabase
+import com.simplemobiletools.contacts.pro.databases.DonsDatabaseHandler
 import com.simplemobiletools.contacts.pro.dialogs.*
 import com.simplemobiletools.contacts.pro.extensions.config
 import com.simplemobiletools.contacts.pro.extensions.getTempFile
@@ -50,6 +55,9 @@ class MainActivity : SimpleActivity(), RefreshContactsListener {
     private val PICK_IMPORT_SOURCE_INTENT = 1
     private val PICK_EXPORT_FILE_INTENT = 2
 
+    private val LOGIN_TOKEN_INTENT = 2
+    private var loginToken: String? = null
+
     private var isSearchOpen = false
     private var searchMenuItem: MenuItem? = null
     private var werePermissionsHandled = false
@@ -66,10 +74,16 @@ class MainActivity : SimpleActivity(), RefreshContactsListener {
     private var storedFontSize = 0
     private var storedShowTabs = 0
 
+    private var donsDatabase: DonsDatabaseHandler? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         appLaunched(BuildConfig.APPLICATION_ID)
+
+        var db:SQLiteDatabase = openOrCreateDatabase("donsDirectory.db", MODE_PRIVATE,null)
+        donsDatabase = DonsDatabaseHandler(this)
+
 
         storeStateVariables()
         setupTabColors()
@@ -203,6 +217,7 @@ class MainActivity : SimpleActivity(), RefreshContactsListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        Log.d("Main Activity","Menu Selected")
         when (item.itemId) {
             R.id.sort -> showSortingDialog()
             R.id.filter -> showFilterDialog()
@@ -210,25 +225,40 @@ class MainActivity : SimpleActivity(), RefreshContactsListener {
 //            R.id.import_contacts -> tryImportContacts()
 //            R.id.export_contacts -> tryExportContacts()
             R.id.settings -> startActivity(Intent(applicationContext, SettingsActivity::class.java))
-            R.id.login -> startActivity(Intent(applicationContext, LoginActivity::class.java))
+            R.id.login ->  login()
 //            R.id.about -> launchAbout()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
     }
 
+    private fun login() {
+        Log.d("Main Activity","login started")
+        startActivityForResult(Intent(applicationContext, LoginActivity::class.java), LOGIN_TOKEN_INTENT)
+        Log.d("Main Activity","login finished")
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
         super.onActivityResult(requestCode, resultCode, resultData)
-        if (requestCode == PICK_IMPORT_SOURCE_INTENT && resultCode == RESULT_OK && resultData != null && resultData.data != null) {
-//            tryImportContactsFromFile(resultData.data!!)
-        } else if (requestCode == PICK_EXPORT_FILE_INTENT && resultCode == RESULT_OK && resultData != null && resultData.data != null) {
-            try {
-                val outputStream = contentResolver.openOutputStream(resultData.data!!)
-//                exportContactsTo(ignoredExportContactSources, outputStream)
-            } catch (e: Exception) {
-                showErrorToast(e)
+
+        Log.d("Main Activity","onActivityResult started")
+        if(requestCode == LOGIN_TOKEN_INTENT) {
+            if (resultData != null) {
+                loginToken = resultData.getStringExtra("loginToken")
+                Log.d("Main Activity","Login Token: $loginToken")
             }
+            //TODO: Store token in database?
         }
+//        if (requestCode == PICK_IMPORT_SOURCE_INTENT && resultCode == RESULT_OK && resultData != null && resultData.data != null) {
+//            tryImportContactsFromFile(resultData.data!!)
+//        } else if (requestCode == PICK_EXPORT_FILE_INTENT && resultCode == RESULT_OK && resultData != null && resultData.data != null) {
+//            try {
+//                val outputStream = contentResolver.openOutputStream(resultData.data!!)
+//                exportContactsTo(ignoredExportContactSources, outputStream)
+//            } catch (e: Exception) {
+//                showErrorToast(e)
+//            }
+//        }
     }
 
     private fun storeStateVariables() {

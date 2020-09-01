@@ -27,6 +27,8 @@ const val FAILURE = false
 
 class LoginActivity : AppCompatActivity() {
 
+    private val LOGIN_TOKEN_INTENT = 2
+
 //    private val debugModeCheck = MutableLiveData<Boolean>()
 //    private val imageModeGroup = MutableLiveData<Int>()
 //    private val selectionTickViewGroup = MutableLiveData<Int>()
@@ -42,15 +44,7 @@ class LoginActivity : AppCompatActivity() {
             Log.d("ShowMeOnly", "clicked")
             val loginResult = authenticateLogin(username.text, password.text)
             Log.d("ShowMeOnly",loginResult.toString())
-            if (loginResult == 1) {
-                makeToast("Log-in Successful!")
-                finish()
-                //TODO: change main activity using logged-in state (maybe pass a success/fail variable?)
-            } else if (loginResult == 0) {
-                makeToast("Invalid username or password")
-            } else if (loginResult == -1) {
-                makeToast("Connection failed!")
-            }
+
         }
     }
 
@@ -81,10 +75,12 @@ class LoginActivity : AppCompatActivity() {
                         Log.d("Authentication","$authenticated")
                         if (authenticated == 1) {
                             makeToast("Log-in Successful!")
+                            var tokenReturn = Intent().putExtra("loginToken",token)
+                            setResult(LOGIN_TOKEN_INTENT,tokenReturn)
                             finish()
-                        } else if (loginResult == 0) {
+                        } else if (authenticated == 0) {
                             makeToast("Invalid username or password")
-                        } else if (loginResult == -1) {
+                        } else if (authenticated == -1) {
                             makeToast("Connection failed!")
                         }
                     }
